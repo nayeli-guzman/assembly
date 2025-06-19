@@ -1,0 +1,37 @@
+.global _start
+_start:
+
+	MOV R0, #7 // A
+	
+	BL FIBONACCI
+	B END_1
+	
+FIBONACCI:
+	PUSH {LR}
+	
+	CMP R0, #0
+	BEQ BASE_CASE
+	CMP R0, #1
+	BEQ BASE_CASE
+	
+	SUB R0, R0, #1
+	PUSH {R0}
+	BL FIBONACCI
+	MOV R1, R0 // FIBO DE A-1
+	POP {R0}
+	
+	SUB R0, R0, #1 // FIBO DE A-2
+	PUSH {R0, R1}
+	BL FIBONACCI
+	
+	MOV R2, R0
+	POP {R0, R1}
+	ADD R0, R1, R2
+
+BASE_CASE:
+	POP {LR}
+	MOV PC, LR
+
+END_1:
+
+
