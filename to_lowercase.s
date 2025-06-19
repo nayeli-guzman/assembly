@@ -1,0 +1,44 @@
+.global _start
+_start:
+
+	MOV R0, #0x40000 // BASE ADDRESS
+	MOV R1, #8    // arraysize
+	// {4, 6, 3, 2, 9}
+	MOV R3, #0x43
+	STRB R3, [R0]
+	MOV R3, #0x53
+	STRB R3, [R0, #1]
+	MOV R3, #0x33
+	STRB R3, [R0, #2]
+	MOV R3, #0x30
+	STRB R3, [R0, #3]
+	MOV R3, #0x35
+	STRB R3, [R0, #4]
+	MOV R3, #0x31
+	STRB R3, [R0, #5]
+	MOV R3, #0x7A
+	STRB R3, [R0, #6]
+	MOV R3, #0x00
+	STRB R3, [R0, #7]
+	
+LOWERCASE:
+	
+	MOV R3, #0
+FOR:
+	LDRB R4, [R0, R3]
+	CMP R4, #0
+	BEQ END_FOR_LOOP
+	CMP R4, #0x41
+	BLT IGNORE
+	CMP R4, #0x5A
+	BGT IGNORE
+	SUB R4, R4, #0X41
+	ADD R4, R4, #0X61
+	STRB R4, [R0, R3]
+IGNORE:
+	ADD R3, R3, #1
+	B FOR
+END_FOR_LOOP:
+
+	
+
